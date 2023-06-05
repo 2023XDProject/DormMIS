@@ -1,0 +1,20 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: DormPaymentMIS
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: '@localhost'
+    url: jdbc:mysql://localhost:3306/dormpay_db?serverTimezone=UTC
+    username: 'root'
+    password: 'Stella106617749'
+  main:
+    banner-mode: off
+
+mybatis-plus:
+  global-config:
+    banner: false
+    db-config:
+      id-type: assign_id

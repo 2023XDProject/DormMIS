@@ -1,5 +1,6 @@
 package com.xd.mis.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor   //自动完成无参构造
 @TableName("student")   //表名映射
 public class Student {
-    @TableId(value="stu_id")
+    @TableId(value="stu_id",type = IdType.ASSIGN_ID)
     private String stuID;
 
     @TableField(value="dorm_id")

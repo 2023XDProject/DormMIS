@@ -1,0 +1,19 @@
+package com.xd.mis.controller;
+import com.xd.mis.service.impl.EmailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api")
+public class MyController {
+
+    @Autowired
+    private EmailServiceImpl emailService;
+
+    @PostMapping("/verify")
+    public String verifyEmail(@RequestParam String email) {
+        emailService.sendVerificationCode(email);
+        return "Verification code sent to " + email;
+    }
+
+}

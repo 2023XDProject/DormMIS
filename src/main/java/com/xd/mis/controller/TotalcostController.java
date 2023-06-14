@@ -17,13 +17,44 @@ public class TotalcostController {
     @Autowired
     private TotalcostServiceImpl totalcostService;
 
-    //分页列表 模糊查询
-    @GetMapping("/dorm") //不改变数据库数据就用get
-    public Page<Totalcost> page(
+    //分页列表 根据dormid模糊查询历史所有电费
+    @GetMapping("/allelect") //不改变数据库数据就用get
+    public Page<Totalcost> getAllElectCost(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
-        return totalcostService.page(current,size,dormid);
+        return totalcostService.getAllElectCost(new Page<>(current,size),dormid);
+    }
+
+    //分页列表 根据dormid模糊查询历史所有电费
+    @GetMapping("/allwater") //不改变数据库数据就用get
+    public Page<Totalcost> getAllWatherCost(
+            @RequestParam(defaultValue = "") String dormid,
+            @RequestParam(defaultValue = "1") Integer current,
+            @RequestParam(defaultValue = "15") Integer size){
+        return totalcostService.getAllWatherCost(new Page<>(current,size),dormid);
+    }
+
+    //分页列表 根据dormid,year,month模糊查询每月电费
+    @GetMapping("/month") //不改变数据库数据就用get
+    public Page<Totalcost> getMonthElectCost(
+            @RequestParam(defaultValue = "") String dormid,
+            @RequestParam(defaultValue = "") String year,
+            @RequestParam(defaultValue = "") String month,
+            @RequestParam(defaultValue = "1") Integer current,
+            @RequestParam(defaultValue = "15") Integer size){
+        return totalcostService.getMonthElectCost(new Page<>(current,size),dormid,year,month);
+    }
+
+    //分页列表 根据dormid,year,month模糊查询每月水费
+    @GetMapping("/month") //不改变数据库数据就用get
+    public Page<Totalcost> getMonthWatherCost(
+            @RequestParam(defaultValue = "") String dormid,
+            @RequestParam(defaultValue = "") String year,
+            @RequestParam(defaultValue = "") String month,
+            @RequestParam(defaultValue = "1") Integer current,
+            @RequestParam(defaultValue = "15") Integer size){
+        return totalcostService.getMonthWatherCost(new Page<>(current,size),dormid,year,month);
     }
 
     /**

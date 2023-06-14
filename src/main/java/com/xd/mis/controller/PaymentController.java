@@ -23,7 +23,7 @@ public class PaymentController {
         return paymentService.getPaymentInfo(new Page<>(current,size),dormid);
     }
 
-    //分页列表 c
+    //分页列表 根据年月模糊查询宿舍缴费信息
     @GetMapping("/date") //不改变数据库数据就用get
     public Page<Payment> getPaymentByDate(
             @RequestParam(defaultValue = "") String year,

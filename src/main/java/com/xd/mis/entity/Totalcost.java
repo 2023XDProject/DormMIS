@@ -15,9 +15,12 @@ public class Totalcost {
     @TableId(value="dorm_id")
     private String dormID;
 
-    @TableField(value="water_total")
+    @TableField(value="water_mtotal")
     private String wTotal;
 
-    @TableField(value="elec_total")
+    @TableField(value="elec_mtotal")
     private String eTotal;
+
+    @TableField(value="year_month")
+    private String yyyymm;
 }

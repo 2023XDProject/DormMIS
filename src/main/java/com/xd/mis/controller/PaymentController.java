@@ -16,11 +16,21 @@ public class PaymentController {
 
     //分页列表 模糊查询宿舍缴费信息
     @GetMapping("/dorm") //不改变数据库数据就用get
-    public Page<Payment> pageByPayment(
+    public Page<Payment> getPaymentInfo(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
         return paymentService.getPaymentInfo(new Page<>(current,size),dormid);
+    }
+
+    //分页列表 c
+    @GetMapping("/date") //不改变数据库数据就用get
+    public Page<Payment> getPaymentByDate(
+            @RequestParam(defaultValue = "") String year,
+            @RequestParam(defaultValue = "") String month,
+            @RequestParam(defaultValue = "1") Integer current,
+            @RequestParam(defaultValue = "15") Integer size){
+        return paymentService.getPaymentByDate(new Page<>(current,size),year,month);
     }
 
     /**

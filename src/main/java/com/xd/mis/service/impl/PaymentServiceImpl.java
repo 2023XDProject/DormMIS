@@ -26,6 +26,11 @@ public class PaymentServiceImpl extends ServiceImpl<PaymentMapper,Payment> imple
     }
 
     @Override
+    public Page<Payment> getPaymentByDate(Page<Payment> page, String year, String month) {
+        return paymentMapper.getPaymentByDate(page,year,month);
+    }
+
+    @Override
     public Boolean saveOrUpdateById(Payment payment) {
         //存在更新记录，否插入一条记录
         return saveOrUpdate(payment);

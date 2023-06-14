@@ -11,11 +11,11 @@
     </select>
 
 <!--    根据dormid查询水电费余额并分页-->
-<!--    Page<Dorm> getBalence(@Param("page") Page<Dorm> page, @Param("dormid") String dormid);-->
-    <select id="getBalence" resultType="Dorm">
-        SELECT water_balence,elec_balence
+<!--    Page<Dorm> getBalance(@Param("page") Page<Dorm> page, @Param("dormid") String dormid);-->
+    <select id="getBalance" resultType="Dorm">
+        SELECT water_balance,elec_balance
         FROM dorm
-        WHERE dorm_id LIKE "%"#{dormid}"%"
+        WHERE dorm_id = #{dormid}
     </select>
 
 </mapper>

@@ -17,14 +17,8 @@ public class TotalcostController {
     @Autowired
     private TotalcostServiceImpl totalcostService;
 
-    /**
-     * 分页列表 模糊查询
-     * @param dormid
-     * @param current
-     * @param size
-     * @return
-     */
-    @GetMapping("/page") //不改变数据库数据就用get
+    //分页列表 模糊查询
+    @GetMapping("/dorm") //不改变数据库数据就用get
     public Page<Totalcost> page(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,

@@ -14,19 +14,22 @@ public class DormController {
     @Autowired
     private DormServiceImpl dormService;
 
-    /**
-     * 分页列表 模糊查询
-     * @param dormid
-     * @param current
-     * @param size
-     * @return
-     */
-    @GetMapping("/page") //不改变数据库数据就用get
-    public Page<Dorm> page(
+    //分页列表 模糊查询宿舍信息
+    @GetMapping("/info") //不改变数据库数据就用get
+    public Page<Dorm> pageByDormid(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
-        return dormService.page(current,size,dormid);
+        return dormService.pageByDormid(current,size,dormid);
+    }
+
+    //分页列表 模糊查询宿舍剩余水电费
+    @GetMapping("/balance") //不改变数据库数据就用get
+    public Page<Dorm> pageByBalance(
+            @RequestParam(defaultValue = "") String dormid,
+            @RequestParam(defaultValue = "1") Integer current,
+            @RequestParam(defaultValue = "15") Integer size){
+        return dormService.pageByBalance(current,size,dormid);
     }
 
     /**

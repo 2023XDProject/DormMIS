@@ -8,7 +8,7 @@ import com.xd.mis.entity.Payment;
 import java.util.List;
 
 public interface PaymentService extends IService<Payment> {
-    Page<Payment> page(Integer current, Integer size, String dormid);
+    Page<Payment> pageByPayment(Integer current, Integer size, String dormid);
 
     Boolean saveOrUpdateById(Payment payment);
 

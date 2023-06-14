@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http#{//mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.mis.mapper.StudentMapper">
+
+<!--    根据stuid查询学生个人信息并分页-->
+<!--    Page<Student> getStuById(@Param("page") Page<Student> page,@Param("stuid") String stuid);-->
+    <select id="getStuById" resultType="Student">
+        SELECT stu_id,stu_name,sex,age,grade,major
+        FROM student
+        WHERE stu_id LIKE "%"#{stuid}"%"
+    </select>
+
+<!--    根据stuname查询学生个人信息并分页-->
+<!--    Page<Student> getStuByName(@Param("page") Page<Student> page,@Param("stuname") String stuname);-->
+    <select id="getStuByName" resultType="Student">
+        SELECT stu_id,stu_name,sex,age,grade,major
+        FROM student
+        WHERE stu_name LIKE "%"#{stuname}"%"
+    </select>
+
+<!--    根据dormid查询住宿人员名单并分页-->
+<!--    Page<Student> getStuByDormid(@Param("page") Page<Student> page,@Param("dormid") String dormid);-->
+    <select id="getStuByDormid" resultType="Student">
+        SELECT stu_id,stu_name,sex,age,grade,major
+        FROM student
+        WHERE dorm_id LIKE "%"#{dormid}"%"
+    </select>
+
+</mapper>

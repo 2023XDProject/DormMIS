@@ -18,7 +18,7 @@ public class MyBatisPlusConfig {
         MybatisPlusInterceptor mpi = new MybatisPlusInterceptor();
         mpi.addInnerInterceptor(new BlockAttackInnerInterceptor());
 
-        //分页配置
+        //设置分页拦截器
         mpi.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
 
         return mpi;

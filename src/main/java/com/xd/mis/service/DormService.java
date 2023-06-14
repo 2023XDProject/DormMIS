@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface DormService extends IService<Dorm> {
 
-    Page<Dorm> page(Integer current, Integer size, String dormid);
+    Page<Dorm> pageByDormid(Integer current, Integer size, String dormid);
+
+    Page<Dorm> pageByBalance(Integer current, Integer size, String dormid);
 
     Boolean saveOrUpdateById(Dorm dorm);
 

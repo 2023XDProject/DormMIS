@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class PaymentServiceImpl extends ServiceImpl<PaymentMapper,Payment> implements PaymentService {
     @Override
-    public Page<Payment> page(Integer current, Integer size, String dormid) {
+    public Page<Payment> pageByPayment(Integer current, Integer size, String dormid) {
         LambdaQueryWrapper<Payment> wrapper = new LambdaQueryWrapper<Payment>();
         //如果名字不为空
         if(!"".equals(dormid)){

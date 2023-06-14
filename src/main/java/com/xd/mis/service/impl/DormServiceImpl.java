@@ -13,7 +13,19 @@ import java.util.List;
 @Service
 public class DormServiceImpl extends ServiceImpl<DormMapper, Dorm> implements DormService {
     @Override
-    public Page<Dorm> page(Integer current, Integer size, String dormid) {
+    public Page<Dorm> pageByDormid(Integer current, Integer size, String dormid) {
+        LambdaQueryWrapper<Dorm> wrapper = new LambdaQueryWrapper<Dorm>();
+        //如果名字不为空
+        if(!"".equals(dormid)){
+            //模糊查询
+            wrapper.like(Dorm::getDormID,dormid);
+        }
+        Page<Dorm> page = page(new Page<>(current,size), wrapper);
+        return page;
+    }
+
+    @Override
+    public Page<Dorm> pageByBalance(Integer current, Integer size, String dormid) {
         LambdaQueryWrapper<Dorm> wrapper = new LambdaQueryWrapper<Dorm>();
         //如果名字不为空
         if(!"".equals(dormid)){

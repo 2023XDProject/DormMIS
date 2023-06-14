@@ -14,19 +14,13 @@ public class PaymentController {
     @Autowired
     private PaymentServiceImpl paymentService;
 
-    /**
-     * 分页列表 模糊查询
-     * @param dormid
-     * @param current
-     * @param size
-     * @return
-     */
-    @GetMapping("/page") //不改变数据库数据就用get
-    public Page<Payment> page(
+    //分页列表 模糊查询宿舍缴费信息
+    @GetMapping("/dorm") //不改变数据库数据就用get
+    public Page<Payment> pageByPayment(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
-        return paymentService.page(current,size,dormid);
+        return paymentService.pageByPayment(current,size,dormid);
     }
 
     /**

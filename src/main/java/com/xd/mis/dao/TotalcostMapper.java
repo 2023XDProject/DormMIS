@@ -1,8 +1,7 @@
-package com.xd.mis.mapper;
+package com.xd.mis.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xd.mis.entity.Dorm;
 import com.xd.mis.entity.Totalcost;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

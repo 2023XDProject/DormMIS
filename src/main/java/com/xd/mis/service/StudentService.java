@@ -14,7 +14,7 @@ public interface StudentService extends IService<Student> {
 
     Page<Student> selectDormStus(Page<Student> page,String dormid);
 
-    void userRegister(Student user);
+    Boolean userRegister(String uid,String pwd);
 
     Boolean checkUserExist(String uid);
 

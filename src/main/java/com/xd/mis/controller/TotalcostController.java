@@ -18,7 +18,7 @@ public class TotalcostController {
     private TotalcostServiceImpl totalcostService;
 
     //分页列表 根据dormid模糊查询历史所有电费
-    @GetMapping("/allelect") //不改变数据库数据就用get
+    @GetMapping("/allelec") //不改变数据库数据就用get
     public Page<Totalcost> getAllElectCost(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
@@ -36,7 +36,7 @@ public class TotalcostController {
     }
 
     //分页列表 根据dormid,year,month模糊查询每月电费
-    @GetMapping("/month") //不改变数据库数据就用get
+    @GetMapping("/monthelec") //不改变数据库数据就用get
     public Page<Totalcost> getMonthElectCost(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "") String year,
@@ -47,7 +47,7 @@ public class TotalcostController {
     }
 
     //分页列表 根据dormid,year,month模糊查询每月水费
-    @GetMapping("/month") //不改变数据库数据就用get
+    @GetMapping("/monthwater") //不改变数据库数据就用get
     public Page<Totalcost> getMonthWatherCost(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "") String year,

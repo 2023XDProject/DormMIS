@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http#{//mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xd.mis.mapper.PaymentMapper">
+<mapper namespace="com.xd.mis.dao.PaymentMapper">
 
 <!--    根据dormid查询缴费记录并分页-->
 <!--    Page<Payment> getPaymentInfo(Page<Payment> page, String dormid);-->

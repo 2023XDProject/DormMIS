@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http#{//mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xd.mis.mapper.StudentMapper">
+<mapper namespace="com.xd.mis.dao.StudentMapper">
 
 <!--    根据stuid模糊查询学生个人信息并分页-->
 <!--    Page<Student> getStuById(@Param("page") Page<Student> page,@Param("stuid") String stuid);-->
@@ -33,9 +33,12 @@
     </select>
 
 <!--    用户登陆-->
-<!--    Boolean userLogin(@Param("uid") String uid,@Param("password") String password);-->
-    <select id="userLogin" resultType="Student">
-        SELECT EXISTS(SELECT 1 FROM student WHERE stu_id = #{uid} AND password = #{password})
+<!--    Boolean userLogin(@Param("uid") String uid,@Param("pwd") String pwd);-->
+    <select id="userLogin" resultType="java.lang.Boolean">
+        SELECT IF(
+            EXISTS( SELECT * FROM student
+            WHERE stu_id = #{uid} AND pwd = #{pwd}), 1, 0)
+        AS result
     </select>
 
 </mapper>

@@ -1,13 +1,9 @@
 package com.xd.mis.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.injector.methods.SelectById;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.entity.Student;
-import com.xd.mis.mapper.StudentMapper;
+import com.xd.mis.dao.StudentMapper;
 import com.xd.mis.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,17 +33,24 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
 
     //注册用户
     @Override
-    public void userRegister(Student user) {
-        save(user);
+    @Transactional
+    public Boolean userRegister(String uid,String pwd) {
+        Student user = new Student();
+        user.setStuID(uid);
+        user.setPwd(pwd);
+        return save(user);
     }
 
     //判断用户是否存在
     @Override
+    @Transactional
     public Boolean checkUserExist(String uid) {
         return studentMapper.checkUserExist(uid);
     }
 
+    //用户登录
     @Override
+    @Transactional
     public Boolean userLogin(String uid, String pwd) {
         return studentMapper.userLogin(uid,pwd);
     }

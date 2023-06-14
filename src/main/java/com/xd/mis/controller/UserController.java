@@ -15,22 +15,19 @@ public class UserController {
 
     //注册用户
     @PostMapping("/register") //改变数据库数据就用post
-    public void userRegister(@RequestBody Student user){
-        stuService.userRegister(user);
-//        if(!stuService.checkUserExist(user.getStuID())) {//如果不存在
-//            stuService.userRegister(user);//注册
-//            return true;
-//        }
-//        else return false;//如果存在,返回账号已存在
+    public Boolean userRegister(
+            @RequestParam(defaultValue = "") String uid,
+            @RequestParam(defaultValue = "12345") String pwd){
+
+        return stuService.userRegister(uid,pwd);
     }
 
     //登录用户
-    @GetMapping("/login") //不改变数据库数据就用get
-    public void userLogin(
+    @GetMapping("/login")
+    public Boolean userLogin(
             @RequestParam(defaultValue = "") String uid,
             @RequestParam(defaultValue = "") String pwd){
 
-//        if(stuService.userLogin(uid,pwd)) 进入下一个页面
-//        else //用户不存在,提示注册
+        return stuService.userLogin(uid,pwd);
     }
 }

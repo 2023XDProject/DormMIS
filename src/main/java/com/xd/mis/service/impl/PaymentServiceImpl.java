@@ -4,24 +4,25 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.entity.Payment;
+import com.xd.mis.mapper.DormMapper;
 import com.xd.mis.mapper.PaymentMapper;
 import com.xd.mis.service.PaymentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class PaymentServiceImpl extends ServiceImpl<PaymentMapper,Payment> implements PaymentService {
+
+    @Autowired
+    PaymentMapper paymentMapper;
+
     @Override
-    public Page<Payment> pageByPayment(Integer current, Integer size, String dormid) {
-        LambdaQueryWrapper<Payment> wrapper = new LambdaQueryWrapper<Payment>();
-        //如果名字不为空
-        if(!"".equals(dormid)){
-            //模糊查询
-            wrapper.like(Payment::getDormID,dormid);
-        }
-        Page<Payment> page = page(new Page<>(current,size), wrapper);
-        return page;
+    @Transactional
+    public Page<Payment> getPaymentInfo(Page<Payment> page, String dormid) {
+        return paymentMapper.getPaymentInfo(page,dormid);
     }
 
     @Override

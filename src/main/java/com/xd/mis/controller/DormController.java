@@ -20,7 +20,7 @@ public class DormController {
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
-        return dormService.pageByDormid(current,size,dormid);
+        return dormService.getDormInfo(new Page<>(current,size),dormid);
     }
 
     //分页列表 模糊查询宿舍剩余水电费
@@ -29,7 +29,7 @@ public class DormController {
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
-        return dormService.pageByBalance(current,size,dormid);
+        return dormService.getBalance(new Page<>(current,size),dormid);
     }
 
     /**

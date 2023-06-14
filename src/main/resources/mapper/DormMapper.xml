@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http#{//mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xd.mis.mapper.DormMapper">
+
+<!--    根据dormid查询宿舍信息并分页-->
+<!--    Page<Dorm> getDormInfo(@Param("page") Page<Dorm> page, @Param("dormid") String dormid);-->
+    <select id="getDormInfo" resultType="Dorm">
+        SELECT dorm_id,stu_number
+        FROM dorm
+        WHERE dorm_id LIKE "%"#{dormid}"%"
+    </select>
+
+<!--    根据dormid查询水电费余额并分页-->
+<!--    Page<Dorm> getBalence(@Param("page") Page<Dorm> page, @Param("dormid") String dormid);-->
+    <select id="getBalence" resultType="Dorm">
+        SELECT water_balence,elec_balence
+        FROM dorm
+        WHERE dorm_id LIKE "%"#{dormid}"%"
+    </select>
+
+</mapper>

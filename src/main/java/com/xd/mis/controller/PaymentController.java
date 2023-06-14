@@ -20,7 +20,7 @@ public class PaymentController {
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
-        return paymentService.pageByPayment(current,size,dormid);
+        return paymentService.getPaymentInfo(new Page<>(current,size),dormid);
     }
 
     /**

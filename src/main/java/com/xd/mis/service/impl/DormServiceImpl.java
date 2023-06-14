@@ -4,36 +4,34 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.entity.Dorm;
+import com.xd.mis.entity.Student;
 import com.xd.mis.mapper.DormMapper;
+import com.xd.mis.mapper.StudentMapper;
 import com.xd.mis.service.DormService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 public class DormServiceImpl extends ServiceImpl<DormMapper, Dorm> implements DormService {
+
+    @Autowired
+    DormMapper dormMapper;
+
+    ////根据dormid查询宿舍信息并分页
     @Override
-    public Page<Dorm> pageByDormid(Integer current, Integer size, String dormid) {
-        LambdaQueryWrapper<Dorm> wrapper = new LambdaQueryWrapper<Dorm>();
-        //如果名字不为空
-        if(!"".equals(dormid)){
-            //模糊查询
-            wrapper.like(Dorm::getDormID,dormid);
-        }
-        Page<Dorm> page = page(new Page<>(current,size), wrapper);
-        return page;
+    @Transactional
+    public Page<Dorm> getDormInfo(Page<Dorm> page, String dormid) {
+        return dormMapper.getDormInfo(page,dormid);
     }
 
+    //根据dormid查询水电费余额并分页
     @Override
-    public Page<Dorm> pageByBalance(Integer current, Integer size, String dormid) {
-        LambdaQueryWrapper<Dorm> wrapper = new LambdaQueryWrapper<Dorm>();
-        //如果名字不为空
-        if(!"".equals(dormid)){
-            //模糊查询
-            wrapper.like(Dorm::getDormID,dormid);
-        }
-        Page<Dorm> page = page(new Page<>(current,size), wrapper);
-        return page;
+    @Transactional
+    public Page<Dorm> getBalance(Page<Dorm> page, String dormid) {
+        return dormMapper.getBalance(page,dormid);
     }
 
     @Override

@@ -26,4 +26,16 @@
         WHERE dorm_id LIKE "%"#{dormid}"%"
     </select>
 
+<!--    判断用户是否存在-->
+<!--    Boolean checkUserExist(@Param("uid") String uid);-->
+    <select id="checkUserExist" resultType="String">
+        SELECT EXISTS(SELECT 1 FROM student WHERE stu_id = #{uid})
+    </select>
+
+<!--    用户登陆-->
+<!--    Boolean userLogin(@Param("uid") String uid,@Param("password") String password);-->
+    <select id="userLogin" resultType="Student">
+        SELECT EXISTS(SELECT 1 FROM student WHERE stu_id = #{uid} AND password = #{password})
+    </select>
+
 </mapper>

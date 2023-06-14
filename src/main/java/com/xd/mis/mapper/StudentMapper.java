@@ -30,4 +30,12 @@ public interface StudentMapper extends BaseMapper<Student> {
     //根据dormid查询宿舍人员名单并分页
     Page<Student> getStuByDormid(@Param("page") Page<Student> page,@Param("dormid") String dormid);
 
+    //注册用户
+    Boolean userRegister(@Param("user") Student user);
+
+    //判断用户是否存在
+    Boolean checkUserExist(@Param("uid") String uid);
+
+    //用户登陆
+    Boolean userLogin(@Param("uid") String uid,@Param("password") String password);
 }

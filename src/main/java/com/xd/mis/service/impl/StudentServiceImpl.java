@@ -1,6 +1,8 @@
 package com.xd.mis.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.injector.methods.SelectById;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -31,6 +33,23 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     @Transactional
     public Page<Student> selectDormStus(Page<Student> page,String dormid) {
         return studentMapper.getStuByDormid(page,dormid);
+    }
+
+    //注册用户
+    @Override
+    public void userRegister(Student user) {
+        save(user);
+    }
+
+    //判断用户是否存在
+    @Override
+    public Boolean checkUserExist(String uid) {
+        return studentMapper.checkUserExist(uid);
+    }
+
+    @Override
+    public Boolean userLogin(String uid, String password) {
+        return studentMapper.userLogin(uid,password);
     }
 
     @Override

@@ -32,11 +32,7 @@ public class DormController {
         return dormService.getBalance(new Page<>(current,size),dormid);
     }
 
-    /**
-     * 数据保存和新增
-     * @param dorm
-     * @return
-     */
+    //数据保存和新增
     @PostMapping("/update") //改变数据库数据就用post
     public boolean saveOrUpdateById(@RequestBody Dorm dorm){
         return dormService.saveOrUpdateById(dorm);

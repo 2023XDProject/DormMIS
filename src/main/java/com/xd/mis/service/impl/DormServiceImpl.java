@@ -20,7 +20,7 @@ public class DormServiceImpl extends ServiceImpl<DormMapper, Dorm> implements Do
     @Autowired
     DormMapper dormMapper;
 
-    ////根据dormid查询宿舍信息并分页
+    //根据dormid查询宿舍信息并分页
     @Override
     @Transactional
     public Page<Dorm> getDormInfo(Page<Dorm> page, String dormid) {

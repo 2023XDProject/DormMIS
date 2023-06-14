@@ -33,9 +33,9 @@
     </select>
 
 <!--    用户登陆-->
-<!--    Boolean userLogin(@Param("uid") String uid,@Param("password") String password);-->
+<!--    Boolean userLogin(@Param("uid") String uid,@Param("pwd") String pwd);-->
     <select id="userLogin" resultType="Student">
-        SELECT EXISTS(SELECT 1 FROM student WHERE stu_id = #{uid} AND password = #{password})
+        SELECT EXISTS(SELECT 1 FROM student WHERE stu_id = #{uid} AND pwd = #{pwd})
     </select>
 
 </mapper>

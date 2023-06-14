@@ -48,8 +48,8 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     }
 
     @Override
-    public Boolean userLogin(String uid, String password) {
-        return studentMapper.userLogin(uid,password);
+    public Boolean userLogin(String uid, String pwd) {
+        return studentMapper.userLogin(uid,pwd);
     }
 
     @Override

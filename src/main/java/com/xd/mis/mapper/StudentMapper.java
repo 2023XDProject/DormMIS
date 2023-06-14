@@ -37,5 +37,5 @@ public interface StudentMapper extends BaseMapper<Student> {
     Boolean checkUserExist(@Param("uid") String uid);
 
     //用户登陆
-    Boolean userLogin(@Param("uid") String uid,@Param("password") String password);
+    Boolean userLogin(@Param("uid") String uid,@Param("pwd") String pwd);
 }

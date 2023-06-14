@@ -34,6 +34,6 @@ public class Student {
     @TableField(value="major")
     private String major;
 
-    @TableField(value="password",select = false)
-    private String password;//保密字段不让查询
+    @TableField(value="pwd",select = false)
+    private String pwd;//保密字段不让查询
 }

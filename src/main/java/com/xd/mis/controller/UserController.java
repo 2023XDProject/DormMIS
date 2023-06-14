@@ -28,9 +28,9 @@ public class UserController {
     @GetMapping("/login") //不改变数据库数据就用get
     public void userLogin(
             @RequestParam(defaultValue = "") String uid,
-            @RequestParam(defaultValue = "") String password){
+            @RequestParam(defaultValue = "") String pwd){
 
-//        if(stuService.userLogin(uid,password)) 进入下一个页面
+//        if(stuService.userLogin(uid,pwd)) 进入下一个页面
 //        else //用户不存在,提示注册
     }
 }

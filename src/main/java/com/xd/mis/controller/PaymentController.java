@@ -33,14 +33,10 @@ public class PaymentController {
         return paymentService.getPaymentByDate(new Page<>(current,size),year,month);
     }
 
-    /**
-     * 数据保存和新增
-     * @param payment
-     * @return
-     */
-    @PostMapping("/update") //改变数据库数据就用post
-    public boolean saveOrUpdateById(@RequestBody Payment payment){
-        return paymentService.saveOrUpdateById(payment);
+    //充值
+    @PostMapping("/recharge") //改变数据库数据就用post
+    public boolean ERecharge(@RequestBody Payment payment){
+        return paymentService.save(payment);
     }
 
     /**

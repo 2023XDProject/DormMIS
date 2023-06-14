@@ -1,8 +1,7 @@
 package com.xd.mis.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.xd.mis.entity.Payment;
-import com.xd.mis.entity.Student;
+import cn.hutool.core.util.StrUtil;
+import com.xd.mis.controller.dto.UserDto;
 import com.xd.mis.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,11 +22,24 @@ public class UserController {
     }
 
     //登录用户
-    @GetMapping("/login")
-    public Boolean userLogin(
-            @RequestParam(defaultValue = "") String uid,
-            @RequestParam(defaultValue = "") String pwd){
-
+    @PostMapping("/login")
+    public Boolean userLogin(@RequestBody UserDto userDto){
+        String uid = userDto.getUid();
+        String pwd = userDto.getPwd();
+        if(StrUtil.isBlank(uid) || StrUtil.isBlank(pwd)) {
+            return false;
+        }
         return stuService.userLogin(uid,pwd);
+    }
+
+    @PostMapping("/edit")
+    public boolean editPassword(
+            @RequestParam String uid,
+            @RequestParam String oldpwd,
+            @RequestParam String newpwd){
+        if(StrUtil.isBlank(uid) || StrUtil.isBlank(oldpwd) || StrUtil.isBlank(newpwd)) {
+            return false;
+        }
+        return stuService.editPassword(uid,oldpwd,newpwd);
     }
 }

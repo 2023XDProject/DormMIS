@@ -41,4 +41,5 @@
         AS result
     </select>
 
+
 </mapper>

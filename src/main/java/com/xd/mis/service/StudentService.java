@@ -16,7 +16,7 @@ public interface StudentService extends IService<Student> {
 
     Boolean userRegister(String uid,String pwd);
 
-    Boolean checkUserExist(String uid);
+    Boolean editPassword(String uid,String oldpwd,String newpwd);
 
     Boolean userLogin(String uid,String pwd);
 

@@ -1,14 +1,18 @@
 package com.xd.mis.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.entity.Student;
 import com.xd.mis.dao.StudentMapper;
 import com.xd.mis.service.StudentService;
+import org.apache.ibatis.reflection.wrapper.BaseWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Wrapper;
 import java.util.List;
 
 @Service //交由Springboot容器管理
@@ -41,11 +45,16 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
         return save(user);
     }
 
-    //判断用户是否存在
+    //修改密码
     @Override
     @Transactional
-    public Boolean checkUserExist(String uid) {
-        return studentMapper.checkUserExist(uid);
+    public Boolean editPassword(String uid, String oldpwd, String newpwd) {
+        LambdaUpdateWrapper<Student> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        lambdaUpdateWrapper.eq(Student::getStuID, uid).set(Student::getPwd, newpwd);
+
+        Integer rows = studentMapper.update(null, lambdaUpdateWrapper);
+        if(rows >= 1) return true;
+        else return false;
     }
 
     //用户登录

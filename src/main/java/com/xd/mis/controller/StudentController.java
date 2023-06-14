@@ -21,13 +21,20 @@ public class StudentController {
      * @param size
      * @return
      */
-    @GetMapping("/page") //不改变数据库数据就用get
-    public Page<Student> page(
-//            @RequestParam("stuname") String stuName,
+    @GetMapping("/pagebyname") //不改变数据库数据就用get
+    public Page<Student> pageByName(
             @RequestParam(defaultValue = "") String stuname,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
-        return stuService.page(current,size,stuname);
+        return stuService.pageByName(current,size,stuname);
+    }
+
+    @GetMapping("/pagebydorm") //不改变数据库数据就用get
+    public Page<Student> pageByDorm(
+            @RequestParam(defaultValue = "") String dormid,
+            @RequestParam(defaultValue = "1") Integer current,
+            @RequestParam(defaultValue = "15") Integer size){
+        return stuService.pageByDorm(current,size,dormid);
     }
 
     /**

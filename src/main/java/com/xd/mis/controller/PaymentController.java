@@ -23,7 +23,6 @@ public class PaymentController {
      */
     @GetMapping("/page") //不改变数据库数据就用get
     public Page<Payment> page(
-//            @RequestParam("stuname") String stuName,
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){

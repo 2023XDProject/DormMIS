@@ -2,10 +2,8 @@ package com.xd.mis.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.entity.Payment;
-import com.xd.mis.entity.Student;
 import com.xd.mis.mapper.PaymentMapper;
 import com.xd.mis.service.PaymentService;
 import org.springframework.stereotype.Service;

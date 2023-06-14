@@ -14,12 +14,24 @@ import java.util.List;
 public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> implements StudentService {
 
     @Override
-    public Page<Student> page(Integer current, Integer size, String stuName) {
+    public Page<Student> pageByName(Integer current, Integer size, String stuName) {
         LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<Student>();
         //如果名字不为空
         if(!"".equals(stuName)){
             //模糊查询
             wrapper.like(Student::getStuName,stuName);
+        }
+        Page<Student> page = page(new Page<>(current,size), wrapper);
+        return page;
+    }
+
+    @Override
+    public Page<Student> pageByDorm(Integer current, Integer size, String dormid) {
+        LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper<Student>();
+        //如果名字不为空
+        if(!"".equals(dormid)){
+            //模糊查询
+            wrapper.like(Student::getDormID,dormid);
         }
         Page<Student> page = page(new Page<>(current,size), wrapper);
         return page;

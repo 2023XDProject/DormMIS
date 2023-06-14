@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.entity.Dorm;
-import com.xd.mis.entity.Student;
 import com.xd.mis.mapper.DormMapper;
 import com.xd.mis.service.DormService;
 import org.springframework.stereotype.Service;

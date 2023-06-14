@@ -2,7 +2,6 @@ package com.xd.mis.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xd.mis.entity.Dorm;
-import com.xd.mis.entity.Student;
 import com.xd.mis.service.impl.DormServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,6 @@ public class DormController {
      */
     @GetMapping("/page") //不改变数据库数据就用get
     public Page<Dorm> page(
-//            @RequestParam("stuname") String stuName,
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){

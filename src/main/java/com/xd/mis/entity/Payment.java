@@ -15,7 +15,7 @@ public class Payment {
     @TableId(value="dorm_id")
     private String dormID;
 
-    @TableId(value="stu_id")
+    @TableField(value="stu_id")
     private String stuID;
 
     @TableField(value="water_bill")

@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+#数据库数据源
+spring:
+  application:
+    name: mis
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: '@localhost'
+    url: jdbc:mysql://localhost:3306/dormpay_db?serverTimezone=UTC
+    username: 'root'
+    password: 'Stella106617749'
+  main:
+#    banner-mode: off
+    allow-circular-references: true
+
+mybatis-plus:
+  type-aliases-package: com.xd.mis.entity #配置类型别名所对应的包
+  mapper-locations: classpath:/mapper/*.xml #xml文件
+  # 日志打印
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

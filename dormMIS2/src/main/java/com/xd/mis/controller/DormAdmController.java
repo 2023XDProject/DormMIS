@@ -21,7 +21,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/dormadm")
 
-public class DormAdmController {
+public class DormAdmController extends StudentController{
+
+    private StudentServiceImpl stuService;
     //分页列表 模糊查询学生个人信息
     @GetMapping("/name") //不改变数据库数据就用get
     public Page<Student> pageByName(

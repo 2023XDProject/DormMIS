@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http#{//mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xd.mis.dao.StudentMapper">
+<mapper namespace="com.xd.mis.dao.TotalcostMapper">
 
 <!--    分页列表 根据dormid模糊查询历史所有花销-->
 <!--    public Page<Totalcost> getAllElectCost(Page<Totalcost> page, String dormid);-->
     <select id="getAllElectCost" resultType="Totalcost">
-        SELECT SUM(elec_mtotal)
+        SELECT SUM(elec_month)
         FROM totalcost
         WHERE dorm_id LIKE "%"#{dormid}"%"
         GROUP BY dorm_id
@@ -13,28 +13,28 @@
 
 <!--    分页列表 根据dormid模糊查询历史所有花销-->
 <!--    public Page<Totalcost> getAllWatherCost(Page<Totalcost> page, String dormid);-->
-    <select id="getAllWatherCost" resultType="Totalcost">
-        SELECT SUM(water_mtotal)
+    <select id="getAllWaterCost" resultType="Totalcost">
+        SELECT SUM(water_month)
         FROM totalcost
         WHERE dorm_id LIKE "%"#{dormid}"%"
         GROUP BY dorm_id
     </select>
 
 <!--    分页列表 根据dormid,year,month模糊查询每月花销-->
-<!--    public Page<Totalcost> getMonthElectCost(Page<Totalcost> page, String dormid, String year,String month);-->
+<!--    public Page<Totalcost> getMonthElectCost(@Param("page") Page<Totalcost> page, @Param("dormid") String dormid, @Param("ym") String ym);-->
     <select id="getMonthElectCost" resultType="Totalcost">
-        SELECT elec_mtotal
+        SELECT elec_month
         FROM totalcost
         WHERE dorm_id LIKE "%"#{dormid}"%"
-        AND year_month LIKE "%"#{year}"-"#{month}"%"
+        AND yyyymm LIKE "%"#{ym}"%"
     </select>
 
 <!--    分页列表 根据dormid,year,month模糊查询每月花销-->
-<!--    public Page<Totalcost> getMonthWatherCost(Page<Totalcost> page, String dormid, String year,String month);-->
-    <select id="getMonthWatherCost" resultType="Totalcost">
-        SELECT water_mtotal
+<!--    public Page<Totalcost> getMonthWaterCost(@Param("page") Page<Totalcost> page, @Param("dormid") String dormid, @Param("ym") String ym);-->
+    <select id="getMonthWaterCost" resultType="Totalcost">
+        SELECT water_month
         FROM totalcost
         WHERE dorm_id LIKE "%"#{dormid}"%"
-        AND year_month LIKE "%"#{year}"-"#{month}"%"
+        AND yyyymm LIKE "%"#{ym}"%"
     </select>
 </mapper>

@@ -16,10 +16,10 @@ public class Dorm {
     private String dormID;
 
     @TableField(value="water_balance")
-    private double wBalance;
+    private Integer wBalance;
 
     @TableField(value="elec_balance")
-    private double eBalance;
+    private Integer eBalance;
 
     @TableField(value="stu_number")
     private Integer sNumber;

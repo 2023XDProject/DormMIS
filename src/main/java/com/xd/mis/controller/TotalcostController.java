@@ -6,8 +6,13 @@ import com.xd.mis.entity.Totalcost;
 import com.xd.mis.service.impl.DormServiceImpl;
 import com.xd.mis.service.impl.TotalcostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -16,6 +21,13 @@ public class TotalcostController {
 
     @Autowired
     private TotalcostServiceImpl totalcostService;
+
+//    @InitBinder
+//    protected void init(HttpServletRequest request, ServletRequestDataBinder binder) {
+//        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
+//        dateFormat.setLenient(false); //是否严格解析时间 false则严格解析 true宽松解析
+//        binder.registerCustomEditor( Date.class, new CustomDateEditor(dateFormat, false));
+//    }
 
     //分页列表 根据dormid模糊查询历史所有电费
     @GetMapping("/allelec") //不改变数据库数据就用get
@@ -28,11 +40,11 @@ public class TotalcostController {
 
     //分页列表 根据dormid模糊查询历史所有电费
     @GetMapping("/allwater") //不改变数据库数据就用get
-    public Page<Totalcost> getAllWatherCost(
+    public Page<Totalcost> getAllWaterCost(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
-        return totalcostService.getAllWatherCost(new Page<>(current,size),dormid);
+        return totalcostService.getAllWaterCost(new Page<>(current,size),dormid);
     }
 
     //分页列表 根据dormid,year,month模糊查询每月电费
@@ -48,13 +60,13 @@ public class TotalcostController {
 
     //分页列表 根据dormid,year,month模糊查询每月水费
     @GetMapping("/monthwater") //不改变数据库数据就用get
-    public Page<Totalcost> getMonthWatherCost(
+    public Page<Totalcost> getMonthWaterCost(
             @RequestParam(defaultValue = "") String dormid,
             @RequestParam(defaultValue = "") String year,
             @RequestParam(defaultValue = "") String month,
             @RequestParam(defaultValue = "1") Integer current,
             @RequestParam(defaultValue = "15") Integer size){
-        return totalcostService.getMonthWatherCost(new Page<>(current,size),dormid,year,month);
+        return totalcostService.getMonthWaterCost(new Page<>(current,size),dormid,year,month);
     }
 
     /**

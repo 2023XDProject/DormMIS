@@ -15,9 +15,12 @@ public class UserController {
     //注册用户
     @PostMapping("/register") //改变数据库数据就用post
     public Boolean userRegister(
-            @RequestParam(defaultValue = "") String uid,
-            @RequestParam(defaultValue = "12345") String pwd){
-
+            @RequestBody() UserDto userDto){
+        String uid = userDto.getUid();
+        String pwd = userDto.getPwd();
+        if(StrUtil.isBlank(uid) || StrUtil.isBlank(pwd)) {
+            return false;
+        }
         return stuService.userRegister(uid,pwd);
     }
 

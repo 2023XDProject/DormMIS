@@ -24,20 +24,22 @@ public class TotalcostServiceImpl extends ServiceImpl<TotalcostMapper, Totalcost
 
     //分页列表 根据dormid模糊查询历史所有水费
     @Override
-    public Page<Totalcost> getAllWatherCost(Page<Totalcost> page, String dormid) {
-        return totalcostMapper.getAllWatherCost(page,dormid);
+    public Page<Totalcost> getAllWaterCost(Page<Totalcost> page, String dormid) {
+        return totalcostMapper.getAllWaterCost(page,dormid);
     }
 
     //分页列表 根据dormid,year,month模糊查询每月水费
     @Override
     public Page<Totalcost> getMonthElectCost(Page<Totalcost> page, String dormid, String year,String month) {
-        return totalcostMapper.getMonthElectCost(page,dormid,year,month);
+        String ym = year+"-"+month;
+        return totalcostMapper.getMonthElectCost(page,dormid,ym);
     }
 
     //分页列表 根据dormid,year,month模糊查询每月电费
     @Override
-    public Page<Totalcost> getMonthWatherCost(Page<Totalcost> page, String dormid, String year,String month) {
-        return totalcostMapper.getMonthWatherCost(page,dormid,year,month);
+    public Page<Totalcost> getMonthWaterCost(Page<Totalcost> page, String dormid, String year,String month) {
+        String ym = year+"-"+month;
+        return totalcostMapper.getMonthWaterCost(page,dormid,ym);
     }
 
     @Override

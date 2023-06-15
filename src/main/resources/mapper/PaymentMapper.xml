@@ -5,7 +5,7 @@
 <!--    根据dormid查询缴费记录并分页-->
 <!--    Page<Payment> getPaymentInfo(Page<Payment> page, String dormid);-->
     <select id="getPaymentInfo" resultType="Payment">
-        SELECT stu_id,water_bill,elec_bill,pay_date
+        SELECT stu_id,water_bill,elec_bill,pay_datetime
         FROM payment
         WHERE dorm_id LIKE "%"#{dormid}"%"
     </select>
@@ -13,9 +13,9 @@
 <!--    分页列表 根据年月模糊查询宿舍缴费信息-->
 <!--    Page<Payment> getPaymentByDate(@Param("page") Page<Payment> page, @Param("year") String year, @Param("month") String month);-->
     <select id="getPaymentByDate" resultType="Payment">
-        SELECT stu_id,water_bill,elec_bill,pay_date
+        SELECT stu_id,water_bill,elec_bill,pay_datetime
         FROM payment
-        WHERE pay_date LIKE "%"#{year}"-"#{month}"%"
+        WHERE pay_datetime LIKE "%"#{ym}"%"
     </select>
 
 </mapper>

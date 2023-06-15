@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xd.mis.entity.Dorm;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
+@Component
 public interface DormMapper extends BaseMapper<Dorm> {
 
     //根据dormid查询宿舍信息并分页

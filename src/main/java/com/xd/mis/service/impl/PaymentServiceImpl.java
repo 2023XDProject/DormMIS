@@ -25,7 +25,8 @@ public class PaymentServiceImpl extends ServiceImpl<PaymentMapper,Payment> imple
 
     @Override
     public Page<Payment> getPaymentByDate(Page<Payment> page, String year, String month) {
-        return paymentMapper.getPaymentByDate(page,year,month);
+        String ym = year+"-"+month;
+        return paymentMapper.getPaymentByDate(page,ym);
     }
 
     @Override

@@ -12,13 +12,13 @@ public interface TotalcostService extends IService<Totalcost> {
     Page<Totalcost> getAllElectCost(Page<Totalcost> page, String dormid);
 
     //分页列表 根据dormid模糊查询历史所有水费
-    Page<Totalcost> getAllWatherCost(Page<Totalcost> page, String dormid);
+    Page<Totalcost> getAllWaterCost(Page<Totalcost> page, String dormid);
 
     //分页列表 根据dormid,year,month模糊查询每月花销
     Page<Totalcost> getMonthElectCost(Page<Totalcost> page, String dormid, String year,String month);
 
     //分页列表 根据dormid,year,month模糊查询每月花销
-    Page<Totalcost> getMonthWatherCost(Page<Totalcost> page, String dormid, String year,String month);
+    Page<Totalcost> getMonthWaterCost(Page<Totalcost> page, String dormid, String year,String month);
 
     Boolean saveOrUpdateById(Totalcost totalcost);
 

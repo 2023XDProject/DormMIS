@@ -4,6 +4,7 @@ package com.xd.mis.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
@@ -13,22 +14,13 @@ public class CorsConfig {
 
     @Bean
     public CorsFilter corsFilter(){
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-
-        //设置访问源地址
-        corsConfiguration.addAllowedOrigin("*");
-
-        //设置访问源请求头
         corsConfiguration.addAllowedHeader("*");
-
-        //设置访问源请求方法
         corsConfiguration.addAllowedMethod("*");
+        corsConfiguration.addAllowedOrigin("*");
+        configurationSource.registerCorsConfiguration("/**", corsConfiguration);
 
-        corsConfiguration.setMaxAge(MAX_AGE);
-
-        //对接口配置跨域设置
-        source.registerCorsConfiguration("/**",corsConfiguration);
-        return new CorsFilter(source);
+        return new CorsFilter(configurationSource);
     }
 }

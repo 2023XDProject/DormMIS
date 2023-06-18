@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.common.CodeConstants;
 import com.xd.mis.controller.dto.PasswordDto;
+import com.xd.mis.controller.dto.StudentDto;
 import com.xd.mis.controller.dto.UserDto;
 import com.xd.mis.entity.Student;
 import com.xd.mis.dao.StudentMapper;
@@ -41,8 +42,18 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     //根据stuname查询学生个人信息并分页
     @Override
     @Transactional
-    public Page<Student> getStuByName(Page<Student> page, String stuName) {
-        return studentMapper.getStuByName(page,stuName);
+    public Page<Student> getStuByName(Page<Student> page, StudentDto stuDto) {
+        LambdaUpdateWrapper<Student> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Student::getStuName,stuDto.getStuName());
+        Student one;
+        try{
+            one = getOne(wrapper);
+        }catch (Exception e){
+            log.error(e.toString());
+            throw new ServiceException(CodeConstants.CODE_500000,"系统错误");
+        }
+        BeanUtil.copyProperties(one,stuDto,true);
+        return studentMapper.getStuByName(page,stuDto.getStuName());
     }
 
     //根据dormid查询住宿人员名单并分页
@@ -80,10 +91,13 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     public UserDto userRegister(UserDto userDto) {
         Student one = getStudentInfo(userDto);
         if(one == null){
-            BeanUtil.copyProperties(userDto,one,true);//忽略大小写
-            save(one);
+//            BeanUtil.copyProperties(userDto,one,true);//忽略大小写
+            Student newStu = new Student();
+            newStu.setStuID(userDto.getUid());
+            newStu.setPwd(userDto.getPwd());
+            save(newStu);
+            return userDto;
         } else throw new ServiceException(CodeConstants.CODE_600000,"用户已存在");
-        return userDto;
     }
 
     //用户登录

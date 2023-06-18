@@ -4,6 +4,7 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xd.mis.controller.dto.StudentDto;
 import com.xd.mis.entity.Student;
 import com.xd.mis.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,9 @@ public class StudentController {
 
     //分页列表 模糊查询学生个人信息
     @GetMapping("/name") //不改变数据库数据就用get
-    public Page<Student> pageByName(
-            @RequestParam(defaultValue = "") String stuname,
-            @RequestParam(defaultValue = "1") Integer current,
-            @RequestParam(defaultValue = "15") Integer size){
+    public Page<Student> pageByName(StudentDto stuDto){
 
-        return stuService.getStuByName(new Page<>(current,size),stuname);
+        return stuService.getStuByName(new Page<>(1,5),stuDto);
     }
 
     //分页列表 模糊查询宿舍人员名单

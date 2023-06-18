@@ -3,9 +3,9 @@
 <mapper namespace="com.xd.mis.dao.StudentMapper">
 
 <!--    根据stuid模糊查询学生个人信息并分页-->
-<!--    Page<Student> getStuById(@Param("page") Page<Student> page,@Param("stuid") String stuid);-->
-    <select id="getStuById" resultType="Student">
-        SELECT stu_id,stu_name,sex,age,grade,major
+<!--    Page<Student> getStuByID(@Param("page") Page<Student> page,@Param("stuid") String stuid);-->
+    <select id="getStuByID" resultType="Student">
+        SELECT stu_name,sex,stu_id,age,grade,major,dorm_id
         FROM student
         WHERE stu_id LIKE "%"#{stuid}"%"
     </select>

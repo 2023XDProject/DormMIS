@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface StudentMapper extends BaseMapper<Student> {
 
     //根据stuid查询学生个人信息并分页
-    Page<Student> getStuById(@Param("page") Page<Student> page,@Param("stuid") String stuid);
+    Page<Student> getStuByID(@Param("page") Page<Student> page,@Param("stuid") String stuid);
 
     //根据stuname查询学生个人信息并分页
     Page<Student> getStuByName(@Param("page") Page<Student> page,@Param("stuname") String stuname);

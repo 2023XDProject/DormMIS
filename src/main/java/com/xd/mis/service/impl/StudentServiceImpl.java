@@ -2,7 +2,6 @@ package com.xd.mis.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.common.CodeConstants;
@@ -26,7 +25,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     @Autowired
     StudentMapper studentMapper;
 
-    private Student getStudentInfo(UserDto userDto){
+    private Student getStudentInfoByUserDto(UserDto userDto){
         LambdaUpdateWrapper<Student> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(Student::getStuID,userDto.getUid());
         wrapper.eq(Student::getPwd,userDto.getPwd());
@@ -39,10 +38,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
         }return one;
     }
 
-    //根据stuname查询学生个人信息并分页
-    @Override
-    @Transactional
-    public Page<Student> getStuByName(Page<Student> page, StudentDto stuDto) {
+    private Student getStudentInfoByStudentDto(StudentDto stuDto){
         LambdaUpdateWrapper<Student> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(Student::getStuName,stuDto.getStuName());
         Student one;
@@ -51,9 +47,17 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
         }catch (Exception e){
             log.error(e.toString());
             throw new ServiceException(CodeConstants.CODE_500000,"系统错误");
-        }
-        BeanUtil.copyProperties(one,stuDto,true);
-        return studentMapper.getStuByName(page,stuDto.getStuName());
+        }return one;
+    }
+
+    //根据stuname查询学生个人信息并分页
+    @Override
+    @Transactional
+    public Page<Student> getStuByID(Page<Student> page, StudentDto stuDto) {
+        Student one = getStudentInfoByStudentDto(stuDto);
+        if(one != null){
+            return studentMapper.getStuByID(page,stuDto.getStuName());
+        }else throw new ServiceException(CodeConstants.CODE_600000,"用户不存在");
     }
 
     //根据dormid查询住宿人员名单并分页
@@ -75,21 +79,21 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
         System.out.println("oldpwd: "+ pwdDto.getOldpwd());
         System.out.println("newpwd: "+ pwdDto.getNewpwd());
         System.out.println("copypwd: "+ userDto.getPwd());
-        Student one = getStudentInfo(userDto);
+        Student one = getStudentInfoByUserDto(userDto);
 
         if(one != null){
             LambdaUpdateWrapper<Student> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
             lambdaUpdateWrapper.eq(Student::getStuID, pwdDto.getUid()).set(Student::getPwd, pwdDto.getNewpwd());
             studentMapper.update(null, lambdaUpdateWrapper);
+            return pwdDto;
         }else throw new ServiceException(CodeConstants.CODE_600000,"用户不存在");
-        return pwdDto;
     }
 
     //注册用户
     @Override
     @Transactional
     public UserDto userRegister(UserDto userDto) {
-        Student one = getStudentInfo(userDto);
+        Student one = getStudentInfoByUserDto(userDto);
         if(one == null){
 //            BeanUtil.copyProperties(userDto,one,true);//忽略大小写
             Student newStu = new Student();
@@ -104,7 +108,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     @Override
     @Transactional
     public UserDto userLogin(UserDto userDto) {
-        Student one = getStudentInfo(userDto);
+        Student one = getStudentInfoByUserDto(userDto);
         if(one != null) {
             BeanUtil.copyProperties(one,userDto,true);//忽略大小写
             return userDto;

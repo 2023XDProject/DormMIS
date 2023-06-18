@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface StudentService extends IService<Student> {
 
-    Page<Student> getStuByName(Page<Student> page, StudentDto stuDto);
+    Page<Student> getStuByID(Page<Student> page, StudentDto stuDto);
 
     Page<Student> selectDormStus(Page<Student> page,String dormid);
 

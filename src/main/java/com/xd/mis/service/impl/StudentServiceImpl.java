@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.common.CodeConstants;
+import com.xd.mis.controller.dto.PasswordDto;
 import com.xd.mis.controller.dto.UserDto;
 import com.xd.mis.entity.Student;
 import com.xd.mis.dao.StudentMapper;
@@ -24,6 +25,19 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     @Autowired
     StudentMapper studentMapper;
 
+    private Student getStudentInfo(UserDto userDto){
+        LambdaUpdateWrapper<Student> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Student::getStuID,userDto.getUid());
+        wrapper.eq(Student::getPwd,userDto.getPwd());
+        Student one;
+        try{
+            one = getOne(wrapper);
+        }catch (Exception e){
+            log.error(e.toString());
+            throw new ServiceException(CodeConstants.CODE_500000,"系统错误");
+        }return one;
+    }
+
     //根据stuname查询学生个人信息并分页
     @Override
     @Transactional
@@ -38,42 +52,45 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
         return studentMapper.getStuByDormid(page,dormid);
     }
 
-    //注册用户
-    @Override
-    @Transactional
-    public Boolean userRegister(String uid,String pwd) {
-        Student user = new Student();
-        user.setStuID(uid);
-        user.setPwd(pwd);
-        return save(user);
-    }
-
     //修改密码
     @Override
     @Transactional
-    public Boolean editPassword(String uid, String oldpwd, String newpwd) {
-        LambdaUpdateWrapper<Student> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
-        lambdaUpdateWrapper.eq(Student::getStuID, uid).set(Student::getPwd, newpwd);
+    public PasswordDto editPassword(PasswordDto pwdDto) {
+        UserDto userDto = new UserDto();
 
-        Integer rows = studentMapper.update(null, lambdaUpdateWrapper);
-        if(rows >= 1) return true;
-        else return false;
+//        userDto.setUid(pwdDto.getUid());
+//        userDto.setPwd(pwdDto.getOldpwd());
+        BeanUtil.copyProperties(pwdDto,userDto,true);
+        System.out.println("oldpwd: "+ pwdDto.getOldpwd());
+        System.out.println("newpwd: "+ pwdDto.getNewpwd());
+        System.out.println("copypwd: "+ userDto.getPwd());
+        Student one = getStudentInfo(userDto);
+
+        if(one != null){
+            LambdaUpdateWrapper<Student> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+            lambdaUpdateWrapper.eq(Student::getStuID, pwdDto.getUid()).set(Student::getPwd, pwdDto.getNewpwd());
+            studentMapper.update(null, lambdaUpdateWrapper);
+        }else throw new ServiceException(CodeConstants.CODE_600000,"用户不存在");
+        return pwdDto;
+    }
+
+    //注册用户
+    @Override
+    @Transactional
+    public UserDto userRegister(UserDto userDto) {
+        Student one = getStudentInfo(userDto);
+        if(one == null){
+            BeanUtil.copyProperties(userDto,one,true);//忽略大小写
+            save(one);
+        } else throw new ServiceException(CodeConstants.CODE_600000,"用户已存在");
+        return userDto;
     }
 
     //用户登录
     @Override
     @Transactional
     public UserDto userLogin(UserDto userDto) {
-        LambdaUpdateWrapper<Student> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(Student::getStuID,userDto.getUid());
-        wrapper.eq(Student::getPwd,userDto.getPwd());
-        Student one;
-        try{
-            one = getOne(wrapper);
-        }catch (Exception e){
-            log.error(e.toString());
-            throw new ServiceException(CodeConstants.CODE_500000,"系统错误");
-        }
+        Student one = getStudentInfo(userDto);
         if(one != null) {
             BeanUtil.copyProperties(one,userDto,true);//忽略大小写
             return userDto;

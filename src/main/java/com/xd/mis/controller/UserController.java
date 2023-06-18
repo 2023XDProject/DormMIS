@@ -3,9 +3,9 @@ package com.xd.mis.controller;
 import cn.hutool.core.util.StrUtil;
 import com.xd.mis.common.CodeConstants;
 import com.xd.mis.common.Result;
+import com.xd.mis.controller.dto.PasswordDto;
 import com.xd.mis.controller.dto.UserDto;
 import com.xd.mis.service.impl.StudentServiceImpl;
-import org.apache.coyote.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,18 +16,18 @@ public class UserController {
     private StudentServiceImpl stuService;
 
     //注册用户
-//    @PostMapping("/register") //改变数据库数据就用post
-//    public Result userRegister(
-//            @RequestBody() UserDto userDto){
-//        String uid = userDto.getUid();
-//        String pwd = userDto.getPwd();
-//        if(StrUtil.isBlank(uid) || StrUtil.isBlank(pwd)) {
-//            return false;
-//        }
-//        return stuService.userRegister(uid,pwd);
-//    }
+    @PostMapping("/register") //改变数据库数据就用post
+    public Result userRegister(UserDto userDto){
+        String uid = userDto.getUid();
+        String pwd = userDto.getPwd();
 
-    //登录用户@RequestBody
+        if(StrUtil.isBlank(uid) || StrUtil.isBlank(pwd)) {
+            return Result.error(CodeConstants.CODE_400000,"参数错误");
+        }
+        return Result.success(stuService.userRegister(userDto));
+    }
+
+    //登录用户
     @PostMapping("/login")
     public Result userLogin(UserDto userDto){
         String uid = userDto.getUid();
@@ -36,18 +36,18 @@ public class UserController {
         if(StrUtil.isBlank(uid) || StrUtil.isBlank(pwd)) {
             return Result.error(CodeConstants.CODE_400000,"参数错误");
         }
-        UserDto dto = stuService.userLogin(userDto);
-        return Result.success(dto);
+        return Result.success(stuService.userLogin(userDto));
     }
 
-//    @PostMapping("/edit")
-//    public Result editPassword(
-//            @RequestParam String uid,
-//            @RequestParam String oldpwd,
-//            @RequestParam String newpwd){
-//        if(StrUtil.isBlank(uid) || StrUtil.isBlank(oldpwd) || StrUtil.isBlank(newpwd)) {
-//            return false;
-//        }
-//        return stuService.editPassword(uid,oldpwd,newpwd);
-//    }
+    //修改密码
+    @PostMapping("/edit")
+    public Result editPassword(PasswordDto pwdDto){
+        String uid = pwdDto.getUid();
+        String oldpwd = pwdDto.getOldpwd();
+        String newpwd = pwdDto.getNewpwd();
+        if(StrUtil.isBlank(uid) || StrUtil.isBlank(oldpwd) || StrUtil.isBlank(newpwd)) {
+            return Result.error(CodeConstants.CODE_400000,"参数错误");
+        }
+        return Result.success(stuService.editPassword(pwdDto));
+    }
 }

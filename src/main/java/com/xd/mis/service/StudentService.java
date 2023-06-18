@@ -3,6 +3,7 @@ package com.xd.mis.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xd.mis.controller.dto.PasswordDto;
 import com.xd.mis.controller.dto.UserDto;
 import com.xd.mis.entity.Student;
 import org.apache.ibatis.annotations.Select;
@@ -15,9 +16,9 @@ public interface StudentService extends IService<Student> {
 
     Page<Student> selectDormStus(Page<Student> page,String dormid);
 
-    Boolean userRegister(String uid,String pwd);
+    UserDto userRegister(UserDto userDto);
 
-    Boolean editPassword(String uid,String oldpwd,String newpwd);
+    PasswordDto editPassword(PasswordDto pwdDto);
 
     UserDto userLogin(UserDto userDto);
 

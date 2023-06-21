@@ -20,8 +20,6 @@ public class DormController {
     @Autowired
     private DormServiceImpl dormService;
 
-
-
     //分页列表 模糊查询宿舍信息
     @GetMapping("/info") //不改变数据库数据就用get
     public Page<Dorm> pageByDormid(
@@ -33,13 +31,11 @@ public class DormController {
 
     //分页列表 模糊查询宿舍剩余水电费
     @GetMapping("/balance") //不改变数据库数据就用get
-    public Result pageByBalance(DormDto dormDto){
-        String dormid = dormDto.getDormID();
-
+    public Result pageByBalance(@RequestParam String dormid){
         if(StrUtil.isBlank(dormid)) {
             return Result.error(CodeConstants.CODE_400000,"参数错误");
         }
-        return Result.success(dormService.getBalance(new Page<>(1,5),dormDto));
+        return Result.success(dormService.getBalance(new Page<>(1,5),dormid));
     }
 
     //数据保存和新增

@@ -1,12 +1,20 @@
 package com.xd.mis.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xd.mis.common.CodeConstants;
+import com.xd.mis.entity.Dorm;
+import com.xd.mis.entity.Student;
 import com.xd.mis.entity.Totalcost;
-import com.xd.mis.dao.TotalcostMapper;
+import com.xd.mis.exception.ServiceException;
+import com.xd.mis.mapper.TotalcostMapper;
+import com.xd.mis.service.DormService;
 import com.xd.mis.service.TotalcostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,16 +24,36 @@ public class TotalcostServiceImpl extends ServiceImpl<TotalcostMapper, Totalcost
     @Autowired
     TotalcostMapper totalcostMapper;
 
+    public Totalcost getCostInfoByDormid(String dormid){
+        LambdaUpdateWrapper<Totalcost> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Totalcost::getDormID,dormid);
+        Totalcost one;
+        try{
+            one = getOne(wrapper);
+        }catch (Exception e){
+            log.error(e.toString());
+            throw new ServiceException(CodeConstants.CODE_500000,"系统错误");
+        }return one;
+    }
+
     //分页列表 根据dormid模糊查询历史所有电费
     @Override
+    @Transactional
     public Page<Totalcost> getAllElectCost(Page<Totalcost> page, String dormid) {
-        return totalcostMapper.getAllElectCost(page,dormid);
+        Totalcost one = getCostInfoByDormid(dormid);
+        if(one != null) {
+            return totalcostMapper.getAllElectCost(page,dormid);
+        } else throw new ServiceException(CodeConstants.CODE_600000,"用户名或密码错误");
     }
 
     //分页列表 根据dormid模糊查询历史所有水费
     @Override
+    @Transactional
     public Page<Totalcost> getAllWaterCost(Page<Totalcost> page, String dormid) {
-        return totalcostMapper.getAllWaterCost(page,dormid);
+        Totalcost one = getCostInfoByDormid(dormid);
+        if(one != null) {
+            return totalcostMapper.getAllWaterCost(page,dormid);
+        } else throw new ServiceException(CodeConstants.CODE_600000,"用户名或密码错误");
     }
 
     //分页列表 根据dormid,year,month模糊查询每月水费

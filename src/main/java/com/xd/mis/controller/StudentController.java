@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//@CrossOrigin("*")//跨域,全部允许
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -20,24 +19,21 @@ public class StudentController {
     private StudentServiceImpl stuService;
 
     //分页列表 模糊查询学生个人信息
-    @GetMapping("/stuid") //不改变数据库数据就用get
-    public Result pageByName(StudentDto stuDto){
-        String stuid = stuDto.getStuID();
-
+    @GetMapping("/info") //不改变数据库数据就用get
+    public Result pageByName(@RequestParam String stuid){
         if(StrUtil.isBlank(stuid)) {
             return Result.error(CodeConstants.CODE_400000,"参数错误");
         }
-        return Result.success(stuService.getStuByID(new Page<>(1,5),stuDto));
+        return Result.success(stuService.getStuByID(new Page<>(1,5),stuid));
     }
 
     //分页列表 模糊查询宿舍人员名单
     @GetMapping("/dorm") //不改变数据库数据就用get
-    public Page<Student> selectDormStus(
-            @RequestParam(defaultValue = "") String dormid,
-            @RequestParam(defaultValue = "1") Integer current,
-            @RequestParam(defaultValue = "15") Integer size){
-
-        return stuService.selectDormStus(new Page<>(current,size),dormid);
+    public Result selectDormStus(@RequestParam String dormid){
+        if(StrUtil.isBlank(dormid)) {
+            return Result.error(CodeConstants.CODE_400000,"参数错误");
+        }
+        return Result.success(stuService.selectDormStus(new Page<>(1,5),dormid));
     }
 
     //数据保存和新增

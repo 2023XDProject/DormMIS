@@ -13,15 +13,15 @@ import java.util.List;
 
 public interface StudentService extends IService<Student> {
 
-    Page<Student> getStuByID(Page<Student> page, StudentDto stuDto);
+    Page<Student> getStuByID(Page<Student> page, String stuid);
 
     Page<Student> selectDormStus(Page<Student> page,String dormid);
 
-    UserDto userRegister(UserDto userDto);
+    StudentDto userRegister(StudentDto studentDto);
 
     PasswordDto editPassword(PasswordDto pwdDto);
 
-    UserDto userLogin(UserDto userDto);
+    StudentDto userLogin(StudentDto studentDto);
 
     Boolean saveOrUpdateById(Student student);
 

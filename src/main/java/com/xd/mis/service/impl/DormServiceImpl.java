@@ -4,9 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.common.CodeConstants;
-import com.xd.mis.controller.dto.DormDto;
 import com.xd.mis.entity.Dorm;
-import com.xd.mis.dao.DormMapper;
+import com.xd.mis.mapper.DormMapper;
 import com.xd.mis.exception.ServiceException;
 import com.xd.mis.service.DormService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +20,9 @@ public class DormServiceImpl extends ServiceImpl<DormMapper, Dorm> implements Do
     @Autowired
     DormMapper dormMapper;
 
-    private Dorm getDormInfoByDormDto(DormDto dormDto){
+    public Dorm getDormInfoByDormDto(String dormid){
         LambdaUpdateWrapper<Dorm> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(Dorm::getDormID,dormDto.getDormID());
+        wrapper.eq(Dorm::getDormID,dormid);
         Dorm one;
         try{
             one = getOne(wrapper);
@@ -43,10 +42,10 @@ public class DormServiceImpl extends ServiceImpl<DormMapper, Dorm> implements Do
     //根据dormid查询水电费余额并分页
     @Override
     @Transactional
-    public Page<Dorm> getBalance(Page<Dorm> page, DormDto dormDto) {
-        Dorm one = getDormInfoByDormDto(dormDto);
+    public Page<Dorm> getBalance(Page<Dorm> page, String dormid) {
+        Dorm one = getDormInfoByDormDto(dormid);
         if(one != null){
-            return dormMapper.getBalance(page,dormDto.getDormID());
+            return dormMapper.getBalance(page,dormid);
         }else throw new ServiceException(CodeConstants.CODE_600000,"宿舍不存在");
     }
 

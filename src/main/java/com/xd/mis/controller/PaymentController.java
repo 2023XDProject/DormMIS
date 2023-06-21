@@ -1,27 +1,20 @@
 package com.xd.mis.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xd.mis.common.CodeConstants;
+import com.xd.mis.common.Result;
+import com.xd.mis.controller.dto.EchargeDto;
 import com.xd.mis.entity.Payment;
 import com.xd.mis.service.impl.PaymentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
-//    @InitBinder
-//    protected void init(HttpServletRequest request, ServletRequestDataBinder binder) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd hh:mm:ss" );
-//        dateFormat.setLenient(false); //是否严格解析时间 false则严格解析 true宽松解析
-//        binder.registerCustomEditor( Date.class, new CustomDateEditor(dateFormat, false));
-//    }
 
     @Autowired
     private PaymentServiceImpl paymentService;
@@ -39,17 +32,37 @@ public class PaymentController {
     @GetMapping("/date")
     public Page<Payment> getPaymentByDate(
             @RequestParam(defaultValue = "") String year,
-            @RequestParam(defaultValue = "") String month,
-            @RequestParam(defaultValue = "1") Integer current,
-            @RequestParam(defaultValue = "15") Integer size){
-        return paymentService.getPaymentByDate(new Page<>(current,size),year,month);
+            @RequestParam(defaultValue = "") String month){
+        return paymentService.getPaymentByDate(new Page<>(1,5),year,month);
     }
 
-    //充值
-    @PostMapping("/recharge") //改变数据库数据就用post
-    public boolean ERecharge(@RequestBody Payment payment){
-        return paymentService.save(payment);
+    //充电费
+    @PostMapping("/erecharge")
+    public Result ERecharge(@RequestBody EchargeDto echargeDto){
+        String dormid = echargeDto.getDormID();
+        String stuid = echargeDto.getStuID();
+        Integer ebill = echargeDto.getEbill();
+
+        if(StrUtil.isBlank(dormid) || StrUtil.isBlank(stuid)) {
+            return Result.error(CodeConstants.CODE_400000,"参数错误");
+        }
+        return Result.success(paymentService.ERecharge(echargeDto));
     }
+
+    //充水费
+//    @PostMapping("/wrecharge")
+//    public Result WRecharge(PaymentDto paymentDto){
+//        String dormid = paymentDto.getDormID();
+//        String stuid = paymentDto.getStuID();
+//        Double wbill = paymentDto.getWBill();
+//        Double ebill = Double.valueOf(0);
+//
+//        if(StrUtil.isBlank(dormid) || StrUtil.isBlank(stuid)
+//                || wbill == null) {
+//            return Result.error(CodeConstants.CODE_400000,"参数错误");
+//        }
+//        return Result.success(paymentService.);
+//    }
 
     /**
      * 单选删除和批量删除

@@ -3,6 +3,7 @@ package com.xd.mis.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xd.mis.controller.dto.EchargeDto;
 import com.xd.mis.entity.Payment;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,6 +16,8 @@ public interface PaymentService extends IService<Payment> {
 
     //分页列表 根据年月模糊查询宿舍缴费信息
     Page<Payment> getPaymentByDate(Page<Payment> page, String year,String month);
+
+    EchargeDto ERecharge(EchargeDto echargeDto);
 
     Boolean saveOrUpdateById(Payment payment);
 

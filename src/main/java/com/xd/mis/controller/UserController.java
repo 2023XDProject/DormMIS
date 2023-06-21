@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.xd.mis.common.CodeConstants;
 import com.xd.mis.common.Result;
 import com.xd.mis.controller.dto.PasswordDto;
+import com.xd.mis.controller.dto.StudentDto;
 import com.xd.mis.controller.dto.UserDto;
 import com.xd.mis.service.impl.StudentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +18,30 @@ public class UserController {
 
     //注册用户
     @PostMapping("/register") //改变数据库数据就用post
-    public Result userRegister(UserDto userDto){
-        String uid = userDto.getUid();
-        String pwd = userDto.getPwd();
+    public Result userRegister( StudentDto studentDto){
+        String stuid = studentDto.getStuID();
+        String pwd = studentDto.getPwd();
 
-        if(StrUtil.isBlank(uid) || StrUtil.isBlank(pwd)) {
+        if(StrUtil.isBlank(stuid) || StrUtil.isBlank(pwd)) {
             return Result.error(CodeConstants.CODE_400000,"参数错误");
         }
-        return Result.success(stuService.userRegister(userDto));
+        return Result.success(stuService.userRegister(studentDto));
     }
 
     //登录用户
     @PostMapping("/login")
-    public Result userLogin(UserDto userDto){
-        String uid = userDto.getUid();
-        String pwd = userDto.getPwd();
-
-        if(StrUtil.isBlank(uid) || StrUtil.isBlank(pwd)) {
+    public Result userLogin( StudentDto studentDto){
+        String stuid = studentDto.getStuID();
+        String pwd = studentDto.getPwd();
+        if(StrUtil.isBlank(stuid) || StrUtil.isBlank(pwd)) {
             return Result.error(CodeConstants.CODE_400000,"参数错误");
         }
-        return Result.success(stuService.userLogin(userDto));
+        return Result.success(stuService.userLogin(studentDto));
     }
 
     //修改密码
     @PostMapping("/edit")
-    public Result editPassword(PasswordDto pwdDto){
+    public Result editPassword(@RequestBody PasswordDto pwdDto){
         String uid = pwdDto.getUid();
         String oldpwd = pwdDto.getOldpwd();
         String newpwd = pwdDto.getNewpwd();

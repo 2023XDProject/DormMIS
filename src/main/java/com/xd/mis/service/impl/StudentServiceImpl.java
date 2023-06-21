@@ -7,16 +7,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xd.mis.common.CodeConstants;
 import com.xd.mis.controller.dto.PasswordDto;
 import com.xd.mis.controller.dto.StudentDto;
-import com.xd.mis.controller.dto.UserDto;
 import com.xd.mis.entity.Student;
-import com.xd.mis.dao.StudentMapper;
+import com.xd.mis.mapper.StudentMapper;
 import com.xd.mis.exception.ServiceException;
 import com.xd.mis.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Wrapper;
 import java.util.List;
 
 @Service //交由Springboot容器管理
@@ -25,10 +23,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     @Autowired
     StudentMapper studentMapper;
 
-    private Student getStudentInfoByUserDto(UserDto userDto){
+    public Student getStudentInfoByStuIDpwd(StudentDto studentDto){
         LambdaUpdateWrapper<Student> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(Student::getStuID,userDto.getUid());
-        wrapper.eq(Student::getPwd,userDto.getPwd());
+        wrapper.eq(Student::getStuID,studentDto.getStuID());
+        wrapper.eq(Student::getPwd,studentDto.getPwd());
         Student one;
         try{
             one = getOne(wrapper);
@@ -38,9 +36,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
         }return one;
     }
 
-    private Student getStudentInfoByStudentDto(StudentDto stuDto){
+    public Student getStudentInfoByStuID(String stuid){
         LambdaUpdateWrapper<Student> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(Student::getStuName,stuDto.getStuName());
+        wrapper.eq(Student::getStuID,stuid);
         Student one;
         try{
             one = getOne(wrapper);
@@ -53,10 +51,10 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     //根据stuname查询学生个人信息并分页
     @Override
     @Transactional
-    public Page<Student> getStuByID(Page<Student> page, StudentDto stuDto) {
-        Student one = getStudentInfoByStudentDto(stuDto);
+    public Page<Student> getStuByID(Page<Student> page, String stuid) {
+        Student one = getStudentInfoByStuID(stuid);
         if(one != null){
-            return studentMapper.getStuByID(page,stuDto.getStuName());
+            return studentMapper.getStuByID(page,stuid);
         }else throw new ServiceException(CodeConstants.CODE_600000,"用户不存在");
     }
 
@@ -71,15 +69,11 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     @Override
     @Transactional
     public PasswordDto editPassword(PasswordDto pwdDto) {
-        UserDto userDto = new UserDto();
+        StudentDto stuDto = new StudentDto();
 
-//        userDto.setUid(pwdDto.getUid());
-//        userDto.setPwd(pwdDto.getOldpwd());
-        BeanUtil.copyProperties(pwdDto,userDto,true);
-        System.out.println("oldpwd: "+ pwdDto.getOldpwd());
-        System.out.println("newpwd: "+ pwdDto.getNewpwd());
-        System.out.println("copypwd: "+ userDto.getPwd());
-        Student one = getStudentInfoByUserDto(userDto);
+        stuDto.setStuID(pwdDto.getUid());
+        stuDto.setPwd(pwdDto.getOldpwd());
+        Student one = getStudentInfoByStuIDpwd(stuDto);
 
         if(one != null){
             LambdaUpdateWrapper<Student> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
@@ -92,26 +86,25 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper,Student> imple
     //注册用户
     @Override
     @Transactional
-    public UserDto userRegister(UserDto userDto) {
-        Student one = getStudentInfoByUserDto(userDto);
+    public StudentDto userRegister(StudentDto studentDto) {
+        Student one = getStudentInfoByStuIDpwd(studentDto);
         if(one == null){
-//            BeanUtil.copyProperties(userDto,one,true);//忽略大小写
             Student newStu = new Student();
-            newStu.setStuID(userDto.getUid());
-            newStu.setPwd(userDto.getPwd());
+            newStu.setStuID(studentDto.getStuID());
+            newStu.setPwd(studentDto.getPwd());
             save(newStu);
-            return userDto;
+            return studentDto;
         } else throw new ServiceException(CodeConstants.CODE_600000,"用户已存在");
     }
 
     //用户登录
     @Override
     @Transactional
-    public UserDto userLogin(UserDto userDto) {
-        Student one = getStudentInfoByUserDto(userDto);
+    public StudentDto userLogin(StudentDto studentDto) {
+        Student one = getStudentInfoByStuIDpwd(studentDto);
         if(one != null) {
-            BeanUtil.copyProperties(one,userDto,true);//忽略大小写
-            return userDto;
+            BeanUtil.copyProperties(one,studentDto,true);//忽略大小写
+            return studentDto;
         } else throw new ServiceException(CodeConstants.CODE_600000,"用户名或密码错误");
     }
 

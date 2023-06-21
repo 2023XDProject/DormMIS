@@ -15,7 +15,7 @@ public interface DormService extends IService<Dorm> {
     Page<Dorm> getDormInfo(Page<Dorm> page, String dormid);
 
     //根据dormid查询水电费余额并分页
-    Page<Dorm> getBalance(Page<Dorm> page, DormDto dormDto);
+    Page<Dorm> getBalance(Page<Dorm> page, String dormid);
 
     Boolean saveOrUpdateById(Dorm dorm);
 
